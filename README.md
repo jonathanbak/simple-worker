@@ -4,7 +4,7 @@
 ## 설치
 simple-worker 파일을 다운로드 받은후 테스트
 ```bash
-$ wget https://github.com/jonathanbak/simple-worker/raw/main/simple-worker && chmod 755 simple-worker
+$ wget https://github.com/jonathanbak/simple-worker/blob/main/simple-worker
 
 $ simple-worker -max_workers=1 -max_queue_size=1200 -port=8087 -work_path=${WORKSPACE}
 ```
@@ -17,10 +17,27 @@ $ simple-worker -max_workers=1 -max_queue_size=1200 -port=8087 -work_path=${WORK
   
 ## 호출
 ```bash
-$ curl -XGET localhost:8087/command/{실행할스크립트명}[/{파라미터1}/{파라미터2}/{파라미터3}...]
+$ curl -XGET http://localhost:8087/command/{실행할스크립트명}[/{파라미터1}/{파라미터2}/{파라미터3}...]
 ```
 이렇게 호출하면 실제 실행되는 파일은 아래와 같다
 ```bash
 $ ${WORKSPACE}/{실행할스크립트명} {파라미터1} {파라미터2} {파라미터3} ...
+```
+
+## 스크립트 파일 예제
+```bash
+$ cat > test.sh << EOF
+PARAM1=\$1
+echo "PARAM1 : \${PARAM1}"
+EOF
+
+$ curl -XGET http://localhost:8087/command/test.sh/test1234
+
+$ tail logfile
+2021/03/18 08:46:22 [../test.sh test1234]
+2021/03/18 08:46:22 REQ : 166d45fa5902567b - /command/test.sh/test1234
+2021/03/18 08:46:22 worker1: started 1616024782833342075
+2021/03/18 08:46:22 PARAM1 : test1234
+2021/03/18 08:46:22 worker1: completed 1616024782833342075!
 ```
 
