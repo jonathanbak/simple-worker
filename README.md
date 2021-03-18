@@ -4,10 +4,18 @@
 ## 설치
 simple-worker 파일을 다운로드 받은후 테스트
 ```bash
-$ wget https://github.com/jonathanbak/simple-worker/blob/main/simple-worker
+$ wget https://github.com/jonathanbak/simple-worker/blob/main/simple-worker && chmod 755 simple-worker
 
 $ simple-worker -max_workers=1 -max_queue_size=1200 -port=8087 -work_path=${WORKSPACE}
 ```
+
+### 데몬으로 실행
+```bash
+$ nohup simple-worker -max_workers=1 -max_queue_size=1200 -port=8087 -work_path=${WORKSPACE} >> logfile 2>&1&
+
+$ tail -f logfile
+```
+
 
 ### 옵션 설명
   - max_workers [1] : 동시 처리할 쓰레드 수, 처리순서가 무조건 지켜져야 한다면 1로 셋팅, 동시에 병렬로 처리하시려면 원하는 숫자만큼 입력 (최대권장수 : cpu 코어수 * 2)
