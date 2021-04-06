@@ -4,7 +4,7 @@
 ## 설치
 simple-worker 파일을 다운로드 받은후 테스트
 ```bash
-$ wget https://github.com/jonathanbak/simple-worker/blob/main/simple-worker && chmod 755 simple-worker
+$ wget https://github.com/jonathanbak/simple-worker/raw/main/simple-worker && chmod 755 simple-worker
 
 $ simple-worker -max_workers=1 -max_queue_size=1200 -port=8087 -work_path=${WORKSPACE}
 ```
